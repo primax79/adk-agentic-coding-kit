@@ -1,4 +1,4 @@
-# adk-toolkit
+# adk-agentic-coding-kit
 
 Google ADK (`google-adk` Python) development knowledge and tooling, packaged
 as a Kilo Code / Claude Code plugin marketplace. One plugin today:
@@ -31,14 +31,14 @@ as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 
 ```text
 claude plugin marketplace add <git-url-of-this-repo>
-/plugin install adk-tools@adk-toolkit
+/plugin install adk-tools@adk-agentic-coding-kit
 ```
 
 ### Kilo Code (and any other tool, via `kilo-plugin-manager`)
 
 ```bash
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add <git-url-of-this-repo> --name adk-toolkit
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-toolkit
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add <git-url-of-this-repo> --name adk-agentic-coding-kit
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit
 # or, into one project only:
 python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools --project /path/to/repo
 ```
