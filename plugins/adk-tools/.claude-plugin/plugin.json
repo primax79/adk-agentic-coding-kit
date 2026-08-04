@@ -1,5 +1,5 @@
 {
   "name": "adk-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Google ADK (google-adk Python) development knowledge and version-upgrade tooling for Kilo Code and Claude Code: 11 reference skills (agent architecture, function tools, structured output, artifacts, tool auth, memory/retrieval, app/plugins, service backends, eval harness, observability, conformance review), plus adk-version-upgrade (skill + adk-diff-auditor subagent + /adk-upgrade command) for adopting new ADK releases."
 }

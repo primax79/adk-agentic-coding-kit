@@ -23,13 +23,13 @@ run more than one replica.
 
 ### Session
 
-| Class | Module |
-|---|---|
-| `InMemorySessionService` | `adk-python: src/google/adk/sessions/in_memory_session_service.py` |
-| `SqliteSessionService` | `adk-python: src/google/adk/sessions/sqlite_session_service.py` |
+| Class                    | Module                                                                                                  |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `InMemorySessionService` | `adk-python: src/google/adk/sessions/in_memory_session_service.py`                                      |
+| `SqliteSessionService`   | `adk-python: src/google/adk/sessions/sqlite_session_service.py`                                         |
 | `DatabaseSessionService` | `adk-python: src/google/adk/sessions/database_session_service.py` (SQLAlchemy: Postgres, MySQL, SQLite) |
-| `VertexAiSessionService` | `adk-python: src/google/adk/sessions/vertex_ai_session_service.py` |
-| `RedisSessionService` | `adk-python-community: src/google/adk_community/sessions/redis_session_service.py` |
+| `VertexAiSessionService` | `adk-python: src/google/adk/sessions/vertex_ai_session_service.py`                                      |
+| `RedisSessionService`    | `adk-python-community: src/google/adk_community/sessions/redis_session_service.py`                      |
 
 Only a persistent service makes `app:` and `user:` state meaningful across
 sessions. `temp:` is stripped before persistence regardless
@@ -40,12 +40,12 @@ adk-docs `docs/sessions/session/migrate.md`) and session rewind
 
 ### Artifact
 
-| Class | Module |
-|---|---|
-| `InMemoryArtifactService` | `adk-python: src/google/adk/artifacts/in_memory_artifact_service.py` |
-| `FileArtifactService` | `adk-python: src/google/adk/artifacts/file_artifact_service.py` |
-| `GcsArtifactService` | `adk-python: src/google/adk/artifacts/gcs_artifact_service.py` |
-| `S3ArtifactService` | `adk-python-community: src/google/adk_community/artifacts/s3_artifact_service.py` — `bucket_name`, `aws_configs`, `save_max_retries`; works with MinIO/Ceph |
+| Class                     | Module                                                                                                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `InMemoryArtifactService` | `adk-python: src/google/adk/artifacts/in_memory_artifact_service.py`                                                                                        |
+| `FileArtifactService`     | `adk-python: src/google/adk/artifacts/file_artifact_service.py`                                                                                             |
+| `GcsArtifactService`      | `adk-python: src/google/adk/artifacts/gcs_artifact_service.py`                                                                                              |
+| `S3ArtifactService`       | `adk-python-community: src/google/adk_community/artifacts/s3_artifact_service.py` — `bucket_name`, `aws_configs`, `save_max_retries`; works with MinIO/Ceph |
 
 ### Memory
 
@@ -81,8 +81,13 @@ get_fast_api_app(
 ```
 
 Note there is **no `credential_service` parameter** — it is constructed
-internally. If you need a specific credential service you must build the
-`Runner` yourself.
+internally, and unlike session/artifact/memory the `services.py`/
+`services.yaml` registry (§4 below) does not cover credentials either. See
+`adk-tool-auth` §3c for the two real workarounds (build `DevServer`/
+`ApiServer` yourself, or monkeypatch the hardcoded name) and §3a/§3b for two
+concrete bugs (cross-session credential reuse, JSON-serialization failure
+with `SessionStateCredentialService` on a persisted backend) that follow from
+this gap.
 
 ## 4. Registering a custom service without forking ADK
 
