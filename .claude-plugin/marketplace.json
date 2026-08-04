@@ -1,0 +1,13 @@
+{
+  "name": "adk-toolkit",
+  "owner": {
+    "name": "Alfredo Oliviero"
+  },
+  "plugins": [
+    {
+      "name": "adk-tools",
+      "source": "./plugins/adk-tools",
+      "description": "Google ADK (google-adk Python) development skills, version-upgrade tooling, and diff-audit subagent for Kilo Code and Claude Code."
+    }
+  ]
+}
