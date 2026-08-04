@@ -29,23 +29,56 @@ Packaged as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 
 ## Install
 
-### Claude Code (native plugin support)
+Two independent install paths. `kilo-plugin-manager` is the one actually
+verified end to end in this repo's history (twice, see Status below) — it
+writes working files into **both** `.kilo/` and `.claude/`, so it installs
+for Claude Code too, with or without Claude's own native `/plugin` command
+being available in your environment (it isn't in every Claude Code build —
+if `/plugin` errors with "isn't available in this environment", use
+`kilo-plugin-manager` instead, it does not depend on that command at all).
+
+### `kilo-plugin-manager` (works for Kilo Code *and* Claude Code)
+
+One-time, per machine: register this repo as a marketplace.
+
+```bash
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add git@github.com:primax79/adk-agentic-coding-kit.git --name adk-agentic-coding-kit
+```
+
+**Global** — available in every project on this machine, written to
+`~/.kilo/skills/`, `~/.kilo/agent/`, `~/.kilo/command/` and their
+`~/.claude/` counterparts:
+
+```bash
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit
+```
+
+**Per project** — scoped to one repo only, written to `<repo>/.kilo/...`
+and `<repo>/.claude/...` (skills are symlinks back to the marketplace
+checkout; pass `--copy` instead if the install must not depend on the
+local checkout staying in place):
+
+```bash
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit --project /path/to/repo
+```
+
+`update` (no args, no `--project`) later pulls this marketplace and
+refreshes every install it made, global and per-project alike.
+`uninstall adk-tools [--project /path/to/repo]` removes them again.
+
+### Claude Code native plugin command (if available in your environment)
 
 ```text
 claude plugin marketplace add git@github.com:primax79/adk-agentic-coding-kit.git
 /plugin install adk-tools@adk-agentic-coding-kit
 ```
 
-### Kilo Code (and any other tool, via `kilo-plugin-manager`)
-
-```bash
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add git@github.com:primax79/adk-agentic-coding-kit.git --name adk-agentic-coding-kit
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit
-# or, into one project only:
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools --project /path/to/repo
-```
-
-`update` (no args) later pulls this marketplace and refreshes every install.
+This is Claude Code's own mechanism (global, user-level — Claude Code does
+not have a documented per-project plugin scope the way Kilo does with
+`--project`). Use it if `/plugin` works in your environment; otherwise use
+`kilo-plugin-manager` above, which produces the same `.claude/agents/`,
+`.claude/commands/`, `.claude/skills/` files without depending on this
+command.
 
 ## Status
 
