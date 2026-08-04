@@ -1,7 +1,9 @@
 # adk-agentic-coding-kit
 
-Google ADK (`google-adk` Python) development knowledge and tooling, packaged
-as a Kilo Code / Claude Code plugin marketplace. One plugin today:
+Google ADK (`google-adk` Python) dev skills, subagent, and upgrade tooling for
+AI coding agents (Claude Code, Kilo Code) — source-verified, not guessed.
+
+Packaged as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 **`adk-tools`**.
 
 ## What's in `adk-tools`
@@ -30,14 +32,14 @@ as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 ### Claude Code (native plugin support)
 
 ```text
-claude plugin marketplace add <git-url-of-this-repo>
+claude plugin marketplace add git@github.com:primax79/adk-agentic-coding-kit.git
 /plugin install adk-tools@adk-agentic-coding-kit
 ```
 
 ### Kilo Code (and any other tool, via `kilo-plugin-manager`)
 
 ```bash
-python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add <git-url-of-this-repo> --name adk-agentic-coding-kit
+python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add git@github.com:primax79/adk-agentic-coding-kit.git --name adk-agentic-coding-kit
 python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit
 # or, into one project only:
 python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools --project /path/to/repo
@@ -48,7 +50,16 @@ python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk
 ## Status
 
 Extracted from a real ADK upgrade + conformance-review pass on a production
-multi-agent project (`dave_agent`), then generalized. Currently vendored as
-a local copy inside that project's own repo while this package is being
-stood up and tested end to end from a fresh workspace; once verified, that
-project switches to installing from here instead.
+multi-agent project (`dave_agent`), then generalized. Verified end to end
+twice: once installing from the local checkout, once installing from this
+repo's real GitHub remote into a throwaway workspace — both times confirming
+the Kilo-shaped `adk-diff-auditor` subagent keeps its read-only permissions
+(`mode: subagent`, `edit: deny`) instead of losing them to a lossy
+Claude→Kilo auto-translation (see `plugins/adk-tools/agents_kilo/`).
+
+`dave_agent` currently still carries its own local copy of these skills
+while this package settles; it will switch to installing from here instead.
+
+## License
+
+[MIT](LICENSE)
