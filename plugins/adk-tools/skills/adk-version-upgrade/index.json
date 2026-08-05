@@ -1,0 +1,13 @@
+{
+  "skills": [
+    {
+      "name": "adk-version-upgrade",
+      "files": [
+        "SKILL.md",
+        "references/migration-spec-template.md",
+        "scripts/check_citations.py",
+        "scripts/get_adk_tree.py"
+      ]
+    }
+  ]
+}

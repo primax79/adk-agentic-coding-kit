@@ -1,0 +1,79 @@
+{
+  "skills": [
+    {
+      "name": "skills/adk-agent-architecture",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-app-and-plugins",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-artifacts-and-files",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-conformance-review",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-eval-harness",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-function-tools",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-memory-and-retrieval",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-observability",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-service-backends",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-structured-output",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-tool-auth",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "skills/adk-version-upgrade",
+      "files": [
+        "SKILL.md",
+        "references/migration-spec-template.md",
+        "scripts/check_citations.py",
+        "scripts/get_adk_tree.py"
+      ]
+    }
+  ]
+}
