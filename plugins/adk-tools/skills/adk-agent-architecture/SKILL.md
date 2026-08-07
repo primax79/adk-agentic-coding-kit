@@ -1,6 +1,6 @@
 ---
 name: adk-agent-architecture
-description: Use when designing, reviewing or refactoring the agent tree of a Google ADK (google-adk Python) project — choosing between sub_agents and AgentTool, hitting "already has a parent agent", deciding how many coordinator layers to have, picking SequentialAgent/ParallelAgent/LoopAgent versus the graph Workflow engine, building retry/refinement loops, or plugging in non-Gemini models.
+description: "Use when designing, reviewing or refactoring the agent tree of a Google ADK (google-adk Python) project — choosing between sub_agents and AgentTool, hitting "already has a parent agent", deciding how many coordinator layers to have, picking SequentialAgent/ParallelAgent/LoopAgent versus the graph Workflow engine, building retry/refinement loops, or plugging in non-Gemini models."
 ---
 
 # ADK agent architecture

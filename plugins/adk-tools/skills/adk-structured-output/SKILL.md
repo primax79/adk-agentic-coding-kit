@@ -1,6 +1,6 @@
 ---
 name: adk-structured-output
-description: Use when a Google ADK (google-adk Python) agent or tool needs reliable JSON or typed output from an LLM — choosing between output_schema, response_schema/response_mime_type and manual parsing, stripping ```json fences by hand, calling google.genai directly from inside a tool, or sending a PDF/image to a model from within an ADK tool.
+description: "Use when a Google ADK (google-adk Python) agent or tool needs reliable JSON or typed output from an LLM — choosing between output_schema, response_schema/response_mime_type and manual parsing, stripping ```json fences by hand, calling google.genai directly from inside a tool, or sending a PDF/image to a model from within an ADK tool."
 ---
 
 # Structured output and direct LLM calls in ADK

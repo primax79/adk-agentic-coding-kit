@@ -1,5 +1,5 @@
 ---
-description: Upgrade this project to a newer google-adk release — version gap, source diff, ADK skill re-verification, migration spec
+description: "Upgrade this project to a newer google-adk release — version gap, source diff, ADK skill re-verification, migration spec"
 ---
 
 Run the Google ADK upgrade procedure for the current project.

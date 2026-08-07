@@ -1,6 +1,6 @@
 ---
 name: adk-diff-auditor
-description: Read-only auditor for one area of a Google ADK (google-adk Python) version diff. Use during an ADK upgrade to find out what actually changed in a subpackage (tools, agents, sessions, plugins, evaluation, telemetry, ...) between two ADK versions, and whether it breaks anything. Dispatch one per area, in parallel, from the /adk-upgrade workflow or the adk-version-upgrade skill.
+description: "Read-only auditor for one area of a Google ADK (google-adk Python) version diff. Use during an ADK upgrade to find out what actually changed in a subpackage (tools, agents, sessions, plugins, evaluation, telemetry, ...) between two ADK versions, and whether it breaks anything. Dispatch one per area, in parallel, from the /adk-upgrade workflow or the adk-version-upgrade skill."
 tools: Bash, Read, Edit, Write, Grep, Glob, WebFetch, WebSearch
 ---
 
