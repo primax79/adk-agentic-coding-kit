@@ -1,6 +1,6 @@
 ---
 name: adk-version-upgrade
-description: "Use when a new Google ADK (google-adk Python) release needs to be adopted - \"bump google-adk\", \"upgrade ADK to X.Y.Z\", \"is there a newer ADK\", \"what breaks if we move to ADK 2.x\", \"is our ADK knowledge still current\" - to detect the version gap, diff the two source trees, re-verify the adk-* reference skills against the new version, and write the project's upgrade task spec."
+description: "Use when a new Google ADK (google-adk Python) release needs to be adopted - `bump google-adk`, `upgrade ADK to X.Y.Z`, `is there a newer ADK`, `what breaks if we move to ADK 2.x`, `is our ADK knowledge still current` - to detect the version gap, diff the two source trees, re-verify the adk-* reference skills against the new version, and write the project's upgrade task spec."
 ---
 
 # Upgrading Google ADK
