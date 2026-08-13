@@ -138,7 +138,7 @@ Phoenix), not Arize-specific; it accepts any OTel `TracerProvider`, so
 But it largely duplicates what `telemetry/tracing.py` already emits under the
 same GenAI semantic conventions. Adopt it only if you specifically want the
 OpenInference span format for LLM/RAG evaluation tooling; for debugging
-routing and latency, the native path in §1–§3 is enough.
+routing and latency, the native path in §1-§3 is enough.
 
 ## Review checklist
 

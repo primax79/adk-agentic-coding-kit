@@ -133,7 +133,7 @@ phase 5.
 ## 5. Read only the diffs that matter
 
 For each changed area (group the phase-4 list by package: `tools/`, `agents/`,
-`sessions/`, `plugins/`, `evaluation/`, `telemetry/`, …), dispatch one
+`sessions/`, `plugins/`, `evaluation/`, `telemetry/`, ...), dispatch one
 `adk-diff-auditor` subagent, in parallel, with: the two tree paths (or the
 checkout plus both tags), the file list for that area, and the names of the
 skills that cite them. Each returns API-level deltas only.
@@ -166,7 +166,7 @@ Only the skills phase 4/5 actually implicated. For each:
 - Re-cite against the **new** tree; verify each replacement symbol by grep
   before writing it (`git grep -n "class X" v<new> -- src/google/adk`).
 - When behaviour changed, say so explicitly with both versions
-  ("through 2.5.0 … ; from 2.6.0 …"), rather than silently overwriting - the
+  ("through 2.5.0 ... ; from 2.6.0 ..."), rather than silently overwriting - the
   reader may be on the old version.
 - Fix every `BROKEN`/`UNKNOWN` citation found in phase 4, even if unrelated to
   the bump.
