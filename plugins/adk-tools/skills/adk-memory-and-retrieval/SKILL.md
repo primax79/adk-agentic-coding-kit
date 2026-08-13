@@ -1,7 +1,7 @@
 ---
 name: adk-memory-and-retrieval
 description: >-
-  Use when adding memory or RAG to a Google ADK (google-adk Python) project — deciding between BaseMemoryService, BaseRetrievalTool and an external vector store, evaluating hosted or community memory services, wondering whether ADK gives you semantic search or multi-tenant document visibility, or deciding whether ingestion should be a conversational tool.
+  Use when adding memory or RAG to a Google ADK (google-adk Python) project - deciding between BaseMemoryService, BaseRetrievalTool and an external vector store, evaluating hosted or community memory services, wondering whether ADK gives you semantic search or multi-tenant document visibility, or deciding whether ingestion should be a conversational tool.
 ---
 
 # Memory vs retrieval vs your own vector store
@@ -12,22 +12,22 @@ tree (`google/adk-python`), `google/adk-docs`, `google/adk-samples` and
 
 ## 1. ADK has two abstractions, and neither is "a RAG over your documents"
 
-**`BaseMemoryService`** — adk-python:
+**`BaseMemoryService`** - adk-python:
 `src/google/adk/memory/base_memory_service.py`. Conceptually **conversational
 memory**: `add_session_to_memory(session)` ingests the events of a finished
 ADK session, `search_memory(app_name, user_id, query)` retrieves past turns.
 It answers "what did this user and I discuss before", not "what does this
 corpus of PDFs say".
 
-**`BaseRetrievalTool`** — adk-python:
+**`BaseRetrievalTool`** - adk-python:
 `src/google/adk/tools/retrieval/base_retrieval_tool.py`. A `BaseTool` whose
 declaration is a single `query: string`, returning relevant text. This is the
 closer analogue to a document RAG, but the shipped implementations are thin:
 
-- `files_retrieval.py` / `llama_index_retrieval.py` — load a whole directory
+- `files_retrieval.py` / `llama_index_retrieval.py` - load a whole directory
   into an in-memory LlamaIndex **at boot**. No incremental update, no
   persistence, no tenancy. Demo-grade.
-- `vertex_ai_rag_retrieval.py` — Vertex AI RAG Engine, a Google-managed
+- `vertex_ai_rag_retrieval.py` - Vertex AI RAG Engine, a Google-managed
   corpus. Not self-hostable.
 
 If you need a multi-source, incrementally updated, multi-tenant document
@@ -41,7 +41,7 @@ vector database is the correct choice**, not an act of NIH.
 | `InMemoryMemoryService` | `adk-python: src/google/adk/memory/in_memory_memory_service.py` | no (keyword) |
 | `VertexAiRagMemoryService` | `adk-python: src/google/adk/memory/vertex_ai_rag_memory_service.py` | yes, Vertex-only |
 | `VertexAiMemoryBankService` | `adk-python: src/google/adk/memory/vertex_ai_memory_bank_service.py` | yes, Vertex-only |
-| `OpenMemoryService` | `adk-python-community: src/google/adk_community/memory/open_memory_service.py` | delegates to the external OpenMemory service (`base_url`, `api_key`, `OpenMemoryServiceConfig` with `search_top_k`, `timeout`) — still conversational memory |
+| `OpenMemoryService` | `adk-python-community: src/google/adk_community/memory/open_memory_service.py` | delegates to the external OpenMemory service (`base_url`, `api_key`, `OpenMemoryServiceConfig` with `search_top_k`, `timeout`) - still conversational memory |
 | `adk-database-memory` (separate community package) | adk-docs: `docs/integrations/database-memory.md` | **no** |
 
 The `adk-database-memory` documentation says it outright: *"Retrieval uses the
@@ -59,13 +59,13 @@ None of the examined abstractions has any notion of *who may see what*.
 `BaseMemoryService` is single-tenant by design (one `app_name` / `user_id` at
 a time); `BaseRetrievalTool` has no filter argument at all. A model of
 public / personal / group-scoped documents, with the corresponding query-time
-filter, is application code with no ADK equivalent. Do not look for a hook —
+filter, is application code with no ADK equivalent. Do not look for a hook -
 design it, and test it (see `adk-eval-harness` §custom metrics).
 
 ## 4. Should the LLM be able to write to the corpus?
 
 The official RAG sample (`adk-samples/python/agents/RAG`) exposes exactly
-**one** tool to the agent — `retrieve_rag_documentation` (query → text).
+**one** tool to the agent - `retrieve_rag_documentation` (query → text).
 Corpus creation and ingestion live in
 `shared_libraries/prepare_corpus_and_data.py`, an offline/admin pipeline that
 is never a tool of the conversational agent.
@@ -91,9 +91,9 @@ correctly stay plain `FunctionTool`s.
 
 If you do use a `BaseMemoryService`, do not reimplement access to it:
 
-- `src/google/adk/tools/load_memory_tool.py` — `load_memory(query)` returning
+- `src/google/adk/tools/load_memory_tool.py` - `load_memory(query)` returning
   `LoadMemoryResponse(memories=[MemoryEntry, ...])`.
-- `src/google/adk/tools/preload_memory_tool.py` — `PreloadMemoryTool` runs
+- `src/google/adk/tools/preload_memory_tool.py` - `PreloadMemoryTool` runs
   automatically on every LLM request and is never called by the model.
 - From a tool: `tool_context.add_memory(...)` / `tool_context.search_memory(query)`
   (`src/google/adk/agents/context.py`).

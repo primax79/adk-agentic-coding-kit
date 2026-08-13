@@ -1,28 +1,28 @@
 ---
 name: adk-agent-architecture
 description: >-
-  Use when designing, reviewing or refactoring the agent tree of a Google ADK (google-adk Python) project — choosing between sub_agents and AgentTool, hitting "already has a parent agent", deciding how many coordinator layers to have, picking SequentialAgent/ParallelAgent/LoopAgent versus the graph Workflow engine, building retry/refinement loops, or plugging in non-Gemini models.
+  Use when designing, reviewing or refactoring the agent tree of a Google ADK (google-adk Python) project - choosing between sub_agents and AgentTool, hitting "already has a parent agent", deciding how many coordinator layers to have, picking SequentialAgent/ParallelAgent/LoopAgent versus the graph Workflow engine, building retry/refinement loops, or plugging in non-Gemini models.
 ---
 
 # ADK agent architecture
 
 Citations are `<source-repo>: <path>::<symbol>` against the ADK 2.x source
 tree (`google/adk-python`) and `google/adk-docs`. Line numbers drift between
-patch releases — grep the symbol, do not trust a line number blindly.
+patch releases - grep the symbol, do not trust a line number blindly.
 
 ## 1. The two composition primitives are not interchangeable
 
 | | `sub_agents=[child]` | `tools=[AgentTool(agent=child)]` |
 |---|---|---|
 | Semantics | **Transfer of control**: the child continues the conversation | **Call and return**: the child runs in an isolated `Runner`, its output comes back as a tool result |
-| Parent link | Sets `child.parent_agent` — **one parent only** | Does not touch `parent_agent`; the same instance can be referenced from anywhere |
-| Input | Full conversation context | Text only — `args['request']` |
+| Parent link | Sets `child.parent_agent` - **one parent only** | Does not touch `parent_agent`; the same instance can be referenced from anywhere |
+| Input | Full conversation context | Text only - `args['request']` |
 | Output | Free-form conversational turn | Validated against the child's `output_schema` if it has one |
 | State | Same session | `state_delta` of the child Runner is propagated back to the caller's `tool_context` |
 
 - Transfer is implemented as a normal tool call named `transfer_to_agent`
   (adk-python: `src/google/adk/tools/transfer_to_agent_tool.py`). It is not a
-  special event type — which is why it shows up in traces and in eval
+  special event type - which is why it shows up in traces and in eval
   trajectories for free.
 - `AgentTool` builds its own `Runner` and validates the final text against the
   agent's schema (adk-python: `src/google/adk/tools/agent_tool.py`, see
@@ -56,7 +56,7 @@ costs one extra LLM turn per request, in latency and tokens.
   `AgentTool`s) and an instruction that describes each specialist
   (adk-docs: `docs/workflows/patterns.md`).
 - `adk-samples/python/agents/financial-advisor` uses a **flat** coordinator
-  over four specialists exposed as `AgentTool`s — no dispatcher tier.
+  over four specialists exposed as `AgentTool`s - no dispatcher tier.
 - Add a tier only when it does real work: an authorization guard, state
   enrichment before transfer, a deterministic pipeline.
 
@@ -72,16 +72,16 @@ hope, not a constraint. Move it to one of:
   redirects when the precondition is missing;
 - an explicit edge in a graph `Workflow` (§5);
 - a `BasePlugin` hook if the rule is app-wide (see the `adk-app-and-plugins`
-  skill — a plugin callback that returns non-`None` short-circuits).
+  skill - a plugin callback that returns non-`None` short-circuits).
 
 ## 5. Template workflow agents vs the graph Workflow engine
 
 Two distinct layers exist in ADK 2.x:
 
-- **Template workflow agents** — `SequentialAgent`, `ParallelAgent`,
+- **Template workflow agents** - `SequentialAgent`, `ParallelAgent`,
   `LoopAgent` (adk-python: `src/google/adk/agents/{sequential,parallel,loop}_agent.py`).
   Simple, composable, still fine for linear or fan-out pipelines.
-- **Graph engine** — `google.adk.Workflow`, exported at top level
+- **Graph engine** - `google.adk.Workflow`, exported at top level
   (adk-python: `src/google/adk/__init__.py` → `from .workflow import Workflow`;
   implementation in `src/google/adk/workflow/_workflow.py` and `_graph.py`).
   Provides nodes/edges, conditional routing (`RoutingMap`), unconditioned-cycle
@@ -112,7 +112,7 @@ LoopAgent(
 The loop ends when a sub-agent emits `EventActions(escalate=True)`. You can
 get that from a small custom `BaseAgent`, or from the built-in tool
 `google.adk.tools.exit_loop` (adk-python:
-`src/google/adk/tools/exit_loop_tool.py` — sets `tool_context.actions.escalate = True`
+`src/google/adk/tools/exit_loop_tool.py` - sets `tool_context.actions.escalate = True`
 and `skip_summarization = True`).
 
 Two failure modes to check for in any existing loop:
@@ -122,7 +122,7 @@ Two failure modes to check for in any existing loop:
   source of truth (e.g. `max_iterations = MAX_RETRY + 1`).
 - **Wrong retry primitive.** `RetryConfig` in the graph engine retries a node
   on **raised exceptions**. It is not a substitute for "an LLM judges whether
-  the output is good enough" — that needs the loop + checker shape above.
+  the output is good enough" - that needs the loop + checker shape above.
 
 Every loop iteration is at least one extra LLM call. Justify it with evidence
 that plain tool-level error handling does not already cover the failure.
@@ -140,7 +140,7 @@ it: `Gemini(retry_options=types.HttpRetryOptions(initial_delay=1, attempts=2))`
 
 ## 8. One-tool-per-agent limitation
 
-Some tools cannot coexist with any other tool in the same agent — Google
+Some tools cannot coexist with any other tool in the same agent - Google
 Search, code execution and Agent Search with the Gemini API (adk-docs:
 `docs/tools/limitations.md`, "One tool per agent limitation"; the note says
 this applies to Search in ADK Python ≤ 1.15.0, with a built-in workaround from

@@ -1,7 +1,7 @@
 ---
 name: adk-artifacts-and-files
 description: >-
-  Use when a Google ADK (google-adk Python) agent must handle files — a user attaches a PDF or image in chat and a tool cannot find it, wiring SaveFilesAsArtifactsPlugin, choosing an ArtifactService (in-memory, local file, GCS, S3), loading and listing artifacts from a tool, or returning binary/multimodal content from a tool.
+  Use when a Google ADK (google-adk Python) agent must handle files - a user attaches a PDF or image in chat and a tool cannot find it, wiring SaveFilesAsArtifactsPlugin, choosing an ArtifactService (in-memory, local file, GCS, S3), loading and listing artifacts from a tool, or returning binary/multimodal content from a tool.
 ---
 
 # Files and artifacts in ADK
@@ -25,7 +25,7 @@ adk-python: `src/google/adk/plugins/save_files_as_artifacts_plugin.py`.
 
 What it does:
 
-- `on_user_message_callback` — for every `Part` with `inline_data` in the
+- `on_user_message_callback` - for every `Part` with `inline_data` in the
   current user message, calls
   `invocation_context.artifact_service.save_artifact(...)`, i.e. the same
   store behind `tool_context.save_artifact` / `load_artifact`.
@@ -36,7 +36,7 @@ What it does:
   when the canonical URI is reachable by the model).
 - Records `{filename: version}` in session state under
   `"<plugin_name>:pending_delta"`, and its `before_agent_callback` merges that
-  into `callback_context.actions.artifact_delta` — the same bookkeeping an
+  into `callback_context.actions.artifact_delta` - the same bookkeeping an
   explicit `save_artifact` from a tool produces.
 
 Wiring (a `Plugin` is registered on the `App`/`Runner`, **not** as a
@@ -68,7 +68,7 @@ instead for better control and flexibility"* (adk-python:
 ## 3. Two things the plugin does not do for you
 
 **Naming.** If your frontend does not set `Blob.display_name`, artifacts are
-named `artifact_<invocation_id>_<i>` — opaque and impossible for the user to
+named `artifact_<invocation_id>_<i>` - opaque and impossible for the user to
 retype. Fix the client to send the original filename.
 
 **Discovery when the user does not name the file.** "Analyse this document"
@@ -84,7 +84,7 @@ gives your tool no filename. Two options:
   `last_uploaded_artifact`). The plugin does not know your state conventions.
 
 `ToolContext.list_artifacts()` (adk-python: `src/google/adk/agents/context.py`)
-lets a tool enumerate what exists — use it instead of shadow-tracking
+lets a tool enumerate what exists - use it instead of shadow-tracking
 filenames in state.
 
 ## 4. Do not let a domain resolver pre-empt `load_artifact`
@@ -119,7 +119,7 @@ All implement `BaseArtifactService`
 (`adk-python: src/google/adk/artifacts/base_artifact_service.py`, with
 `ArtifactVersion` in `artifact_util.py`). For a self-hosted deployment,
 `S3ArtifactService` from the community package is the natural GCS replacement
-— see `adk-service-backends` for how to register it.
+- see `adk-service-backends` for how to register it.
 
 ## 6. Returning files *from* a tool
 
@@ -128,7 +128,7 @@ return actual parts, `MultimodalToolResultsPlugin`
 (adk-python: `src/google/adk/plugins/multimodal_tool_results_plugin.py`)
 adapts function tool responses so they can return a list of `Part`s directly.
 Its own docstring notes it is a stopgap pending native
-`FunctionResponsePart` support outside computer-use tools — check whether it
+`FunctionResponsePart` support outside computer-use tools - check whether it
 is still needed on your version before depending on it.
 
 ## Review checklist

@@ -1,7 +1,7 @@
 ---
 name: adk-version-upgrade
 description: >-
-  Use when a new Google ADK (google-adk Python) release needs to be adopted — "bump google-adk", "upgrade ADK to X.Y.Z", "is there a newer ADK", "what breaks if we move to ADK 2.x", "is our ADK knowledge still current" — to detect the version gap, diff the two source trees, re-verify the adk-* reference skills against the new version, and write the project's upgrade task spec.
+  Use when a new Google ADK (google-adk Python) release needs to be adopted - "bump google-adk", "upgrade ADK to X.Y.Z", "is there a newer ADK", "what breaks if we move to ADK 2.x", "is our ADK knowledge still current" - to detect the version gap, diff the two source trees, re-verify the adk-* reference skills against the new version, and write the project's upgrade task spec.
 ---
 
 # Upgrading Google ADK
@@ -13,7 +13,7 @@ migration spec.
 
 This skill is the *change* procedure. The *state* of ADK at the currently
 documented version lives in the ten reference skills indexed by
-`adk-conformance-review` §6 — read those for behaviour, edit those in phase 5.
+`adk-conformance-review` §6 - read those for behaviour, edit those in phase 5.
 The verification discipline (never assert a symbol you have not grepped; cite
 `path::symbol`; code wins over docs for behaviour) comes from
 `adk-conformance-review` §2 and applies unchanged here.
@@ -32,7 +32,7 @@ Three numbers, and they are frequently not the same one:
 | **latest** | `python3 -m pip index versions google-adk` |
 
 - Use the **project's** interpreter, not the ambient one. Also print the import
-  location — `python -c "import google.adk, pathlib; print(pathlib.Path(google.adk.__file__).parent)"` —
+  location - `python -c "import google.adk, pathlib; print(pathlib.Path(google.adk.__file__).parent)"` -
   because an editable/vendored ADK is a different story from a wheel.
   `google.adk.__version__` and `google.adk.version.__version__` both exist and
   agree with the distribution metadata.
@@ -40,7 +40,7 @@ Three numbers, and they are frequently not the same one:
   `curl -s https://pypi.org/pypi/google-adk/json | jq -r .info.version`.
   It reports the latest **stable** release; add `--pre` (or read
   `.releases` from the JSON) to see prereleases. There is no `uv pip index`
-  subcommand — do not reach for it.
+  subcommand - do not reach for it.
 - Target metadata before committing to the bump:
   `curl -s https://pypi.org/pypi/google-adk/<version>/json | jq -r '.info.requires_python, (.info.requires_dist[]|select(startswith("pydantic")))'`.
   A raised `requires-python` floor or a moved pydantic/genai floor is usually
@@ -51,7 +51,7 @@ Three numbers, and they are frequently not the same one:
 **Stop rules.** If installed == latest, report that and stop. If declared !=
 installed, that discrepancy is itself the first finding and must be resolved
 before any conclusion about the codebase is trustworthy
-(`adk-conformance-review` §1) — every claim in this procedure is otherwise
+(`adk-conformance-review` §1) - every claim in this procedure is otherwise
 drawn from a version nobody runs.
 
 ## 2. Materialize both source trees
@@ -74,7 +74,7 @@ falls back to a PyPI wheel; either way the output is normalized to
   runs `git fetch --tags` before giving up (disable with `--no-fetch`).
 - If the project imports `google.adk_community.*`, materialize that
   distribution too (`--package google-adk-community`) and pass both trees in
-  phase 4 — otherwise its citations are reported as unchecked, not as valid.
+  phase 4 - otherwise its citations are reported as unchecked, not as valid.
 - An already-installed version can be used directly as a tree: pass the
   directory two levels above `google/adk` (i.e. `site-packages`).
 
@@ -85,7 +85,7 @@ falls back to a PyPI wheel; either way the output is normalized to
   It is release-please generated: `### Features` / `### Bug Fixes` per release,
   newest first. Read every entry from `v<old>` down to `v<new>`.
   (`CHANGELOG-v2.md` exists on the default branch but is not present at every
-  tag — fetch it from `main` if you want it.)
+  tag - fetch it from `main` if you want it.)
 - For a **major** bump, the incompatibility list lives in the docs, not the
   changelog: `adk-docs` → `docs/2.0/index.md`, section *"ADK Python 1.x
   compatibility"* (published as <https://google.github.io/adk-docs/2.0/>).
@@ -116,14 +116,14 @@ dotted `google.adk.*` reference and every plausible identifier from each
 | `CHANGED` | cited file differs | read the diff (phase 5) |
 | `MOVED_OR_DELETED` | path gone; candidate new path reported | re-cite or remove the claim |
 | `MOVED` (symbol) | definition left the cited file, name still exists | re-cite the new location |
-| `REMOVED` (symbol) | defined in old, absent from new entirely | the claim is dead — rewrite it |
+| `REMOVED` (symbol) | defined in old, absent from new entirely | the claim is dead - rewrite it |
 | `ADDED_AFTER` | exists only in the new tree | the skill was written against a different version than `--old`; re-check which |
 | `BROKEN` / `UNKNOWN` | in neither tree | **pre-existing bad citation**, unrelated to the bump; fix it anyway |
 | `NO_TREE` | package (usually `adk_community`) not supplied | pass its tree, or state it was not checked |
 
 Symbol resolution is AST-based, so re-exports (`from .load_artifacts_tool
 import load_artifacts_tool as load_artifacts`), Pydantic fields and function
-parameters all count as definitions — a symbol only reports `REMOVED` when
+parameters all count as definitions - a symbol only reports `REMOVED` when
 nothing in the new tree defines or even mentions it.
 
 The tail of the report is a deduplicated **"Diffs to read"** list: exactly the
@@ -166,7 +166,7 @@ Only the skills phase 4/5 actually implicated. For each:
 - Re-cite against the **new** tree; verify each replacement symbol by grep
   before writing it (`git grep -n "class X" v<new> -- src/google/adk`).
 - When behaviour changed, say so explicitly with both versions
-  ("through 2.5.0 … ; from 2.6.0 …"), rather than silently overwriting — the
+  ("through 2.5.0 … ; from 2.6.0 …"), rather than silently overwriting - the
   reader may be on the old version.
 - Fix every `BROKEN`/`UNKNOWN` citation found in phase 4, even if unrelated to
   the bump.
@@ -174,7 +174,7 @@ Only the skills phase 4/5 actually implicated. For each:
 - If a skill is added, retired or renamed, update the `adk-conformance-review`
   §6 index table in the same pass.
 
-Self-check when done — running the checker with the same tree on both sides
+Self-check when done - running the checker with the same tree on both sides
 turns it into a pure existence check of every citation:
 
 ```bash
@@ -185,7 +185,7 @@ Everything must come back `UNCHANGED`/`OK`, with no `BROKEN` or `UNKNOWN`
 symbols. Then `/reload` to pick the skills up mid-session.
 
 Skills need no Claude Code sync: `~/.claude/skills` is a symlink to
-`~/.kilo/skills`. Agents are separate files — if you touched
+`~/.kilo/skills`. Agents are separate files - if you touched
 `~/.kilo/agent/*.md`, run
 `python3 ~/.kilo/skills/kilo-claude-sync/scripts/sync.py --scope global`.
 
@@ -196,7 +196,7 @@ Copy `references/migration-spec-template.md` into the project's task area
 A spec that is not grounded in the phase-4/5 findings is worthless; every
 "breaking change" line must carry its ADK `path::symbol` evidence.
 
-Project-specific constraints that must be discovered before writing it — these
+Project-specific constraints that must be discovered before writing it - these
 are what actually break upgrades, more often than ADK itself:
 
 ```bash
@@ -230,7 +230,7 @@ install regardless of the ADK version.
 3. `check_citations.py --old <new> --new <new>` clean.
 4. Migration spec written, with per-claim ADK evidence, constraints, and an
    ordered verification section that a fresh agent can execute.
-5. Application code untouched unless a real incompatibility was demonstrated —
+5. Application code untouched unless a real incompatibility was demonstrated -
    a version bump is not a refactor.
 
 ## Related

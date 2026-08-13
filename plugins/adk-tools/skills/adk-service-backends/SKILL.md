@@ -1,7 +1,7 @@
 ---
 name: adk-service-backends
 description: >-
-  Use when choosing or wiring the pluggable backing services of a Google ADK (google-adk Python) deployment — SessionService, ArtifactService, MemoryService, CredentialService — including self-hosted options (SQLite, Postgres, Redis, S3/MinIO), what the defaults silently are, and how to register a custom service via services.yaml or services.py.
+  Use when choosing or wiring the pluggable backing services of a Google ADK (google-adk Python) deployment - SessionService, ArtifactService, MemoryService, CredentialService - including self-hosted options (SQLite, Postgres, Redis, S3/MinIO), what the defaults silently are, and how to register a custom service via services.yaml or services.py.
 ---
 
 # Pluggable service backends
@@ -46,14 +46,14 @@ adk-docs `docs/sessions/session/migrate.md`) and session rewind
 | `InMemoryArtifactService` | `adk-python: src/google/adk/artifacts/in_memory_artifact_service.py`                                                                                        |
 | `FileArtifactService`     | `adk-python: src/google/adk/artifacts/file_artifact_service.py`                                                                                             |
 | `GcsArtifactService`      | `adk-python: src/google/adk/artifacts/gcs_artifact_service.py`                                                                                              |
-| `S3ArtifactService`       | `adk-python-community: src/google/adk_community/artifacts/s3_artifact_service.py` — `bucket_name`, `aws_configs`, `save_max_retries`; works with MinIO/Ceph |
+| `S3ArtifactService`       | `adk-python-community: src/google/adk_community/artifacts/s3_artifact_service.py` - `bucket_name`, `aws_configs`, `save_max_retries`; works with MinIO/Ceph |
 
 ### Memory
 
 `InMemoryMemoryService`, `VertexAiRagMemoryService`, `VertexAiMemoryBankService`
 (`adk-python: src/google/adk/memory/`), community `OpenMemoryService`
 (`adk-python-community: src/google/adk_community/memory/open_memory_service.py`).
-Read `adk-memory-and-retrieval` before picking one — none of the self-hostable
+Read `adk-memory-and-retrieval` before picking one - none of the self-hostable
 options does semantic search.
 
 ### Credential
@@ -81,7 +81,7 @@ get_fast_api_app(
 )
 ```
 
-Note there is **no `credential_service` parameter** — it is constructed
+Note there is **no `credential_service` parameter** - it is constructed
 internally, and unlike session/artifact/memory the `services.py`/
 `services.yaml` registry (§4 below) does not cover credentials either. See
 `adk-tool-auth` §3c for the two real workarounds (build `DevServer`/
@@ -97,7 +97,7 @@ you can extend from your agents directory
 (adk-python: `src/google/adk/cli/service_registry.py`, loaded by
 `fast_api.py` and `cli.py` via `load_services_module`).
 
-**Option A — `services.yaml` (or `.yml`) in the agent directory:**
+**Option A - `services.yaml` (or `.yml`) in the agent directory:**
 
 ```yaml
 services:
@@ -112,7 +112,7 @@ services:
 Works when the class can be built as `MyService(uri="...", **kwargs)`.
 You then pass `session_service_uri="mysession://..."`.
 
-**Option B — `services.py` in the agent directory:**
+**Option B - `services.py` in the agent directory:**
 
 ```python
 from google.adk.cli.service_registry import get_service_registry
@@ -137,7 +137,7 @@ building the `Runner` by hand.
 The community implementations live in a separate distribution
 (`google/adk-python-community`, importable as `google.adk_community.*`) with
 its own release cadence and a lighter review bar than core. Read the source of
-anything you adopt from it — quality varies, and some modules
+anything you adopt from it - quality varies, and some modules
 (`tools/spraay/` blockchain payment tools, for example) are narrow
 domain contributions rather than general infrastructure.
 
@@ -148,7 +148,7 @@ domain contributions rather than general infrastructure.
   its durability model).
 - Artifacts: `S3ArtifactService` against MinIO, or `FileArtifactService` on a
   mounted volume for a single node.
-- Memory: nothing hosted will do semantic search — plan for an external vector
+- Memory: nothing hosted will do semantic search - plan for an external vector
   store (`adk-memory-and-retrieval`).
 - Credentials: default in-memory, and keep tokens out of persisted state
   (`adk-tool-auth`).

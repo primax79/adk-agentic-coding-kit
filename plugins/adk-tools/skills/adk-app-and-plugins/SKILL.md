@@ -1,7 +1,7 @@
 ---
 name: adk-app-and-plugins
 description: >-
-  Use when configuring the application layer of a Google ADK (google-adk Python) project — the App container, writing or registering a BasePlugin, intercepting every tool or model call globally, the built-in plugins (logging, retry, context filter, global instruction, artifacts), context caching, context compaction for long conversations, or agent resumability.
+  Use when configuring the application layer of a Google ADK (google-adk Python) project - the App container, writing or registering a BasePlugin, intercepting every tool or model call globally, the built-in plugins (logging, retry, context filter, global instruction, artifacts), context caching, context compaction for long conversations, or agent resumability.
 ---
 
 # The App container and plugins
@@ -25,7 +25,7 @@ resumability_config: Optional[ResumabilityConfig]
 adk-docs (`docs/apps/index.md`) frames it as: centralized configuration,
 startup/shutdown lifecycle hooks for persistent resources, an explicit
 boundary for `app:`-prefixed state, and a formal deployable unit. Defining an
-`App` is optional — but four features (plugins, context caching, compaction,
+`App` is optional - but four features (plugins, context caching, compaction,
 resume) are only reachable through it.
 
 Discovery: `AgentLoader` prefers a module-level `app` object over `root_agent`
@@ -35,14 +35,14 @@ Discovery: `AgentLoader` prefers a module-level `app` object over `root_agent`
 app = App(name="my_app", root_agent=root_agent, plugins=[...])
 ```
 
-at the bottom of your agent module is enough — no change to your
+at the bottom of your agent module is enough - no change to your
 `get_fast_api_app(...)` call. `get_fast_api_app` also accepts
 `extra_plugins: list[str]` if you prefer configuring them at the server layer
 (`src/google/adk/cli/fast_api.py`).
 
 ## 2. Plugin callback surface
 
-`adk-python: src/google/adk/plugins/base_plugin.py::BasePlugin` — 14 hooks,
+`adk-python: src/google/adk/plugins/base_plugin.py::BasePlugin` - 14 hooks,
 all `async`:
 
 | Stage | Hooks |
@@ -52,7 +52,7 @@ all `async`:
 | Model | `before_model_callback`, `after_model_callback`, `on_model_error_callback` |
 | Tool | `before_tool_callback`, `after_tool_callback`, `on_tool_error_callback` |
 
-A plugin sees **every** agent, model and tool in the app — that is the point.
+A plugin sees **every** agent, model and tool in the app - that is the point.
 Use a plugin for cross-cutting concerns (policy, logging, retry, redaction,
 upload handling) and an agent-level callback for something specific to one
 agent.
@@ -77,7 +77,7 @@ without calling the model; an error hook that returns a fallback result
 instead of re-raising (`on_model_error_callback` / `on_tool_error_callback`
 return `None` to let the original exception propagate).
 
-## 4. Built-in plugins — read before writing your own
+## 4. Built-in plugins - read before writing your own
 
 All in `adk-python: src/google/adk/plugins/`:
 
@@ -94,28 +94,28 @@ All in `adk-python: src/google/adk/plugins/`:
 
 From `google-adk-community` (`src/google/adk_community/plugins/`):
 
-- `AgentGovernancePlugin` — evaluates YAML/OPA/Cedar policies before tool
+- `AgentGovernancePlugin` - evaluates YAML/OPA/Cedar policies before tool
   execution and returns a dict that short-circuits denied calls (exactly the
   §3 contract). Requires the external `agentmesh-platform`; has a `fail_open`
   switch.
-- `TaxonomyPlugin` (+ `taxonomy/policy.py`, `taxonomy_config.py`) — pluggable
+- `TaxonomyPlugin` (+ `taxonomy/policy.py`, `taxonomy_config.py`) - pluggable
   taxonomy/skill policy enforcement.
 
 ## 5. Context compaction (long conversations)
 
 `EventsCompactionConfig` (adk-python: `src/google/adk/apps/_configs.py`):
 
-- `summarizer: Optional[BaseEventsSummarizer]` — default implementation
+- `summarizer: Optional[BaseEventsSummarizer]` - default implementation
   `src/google/adk/apps/llm_event_summarizer.py`.
-- `compaction_interval: int` — number of *new user-initiated invocations*
+- `compaction_interval: int` - number of *new user-initiated invocations*
   that, once fully represented in the session events, triggers a compaction.
-- `overlap_size: int` — how many preceding invocations to include for
+- `overlap_size: int` - how many preceding invocations to include for
   continuity.
 
 Machinery in `src/google/adk/apps/compaction.py`; docs in
 `adk-docs: docs/context/compaction.md` (token-based strategy and sliding
 window). This is the supported answer to "my sessions get too long", not
-manual event truncation — and note the compaction code goes to some trouble to
+manual event truncation - and note the compaction code goes to some trouble to
 keep function call/response pairs and HITL positions consistent, which a
 naive truncation would break.
 
@@ -125,7 +125,7 @@ naive truncation would break.
 `cache_intervals`, `ttl_seconds`, `min_tokens`. Applies to all LLM agents in
 the app. Docs: `adk-docs: docs/context/caching.md`. Implementation lives in
 the model layer (`src/google/adk/models/cache_metadata.py`,
-`gemini_context_cache_manager.py`) — a model instantiated outside the ADK
+`gemini_context_cache_manager.py`) - a model instantiated outside the ADK
 model layer gets none of it (see `adk-structured-output` §5).
 
 ## 7. Resumability

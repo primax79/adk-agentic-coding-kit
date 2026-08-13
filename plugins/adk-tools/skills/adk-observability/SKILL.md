@@ -1,7 +1,7 @@
 ---
 name: adk-observability
 description: >-
-  Use when instrumenting or debugging a Google ADK (google-adk Python) agent — setting up OpenTelemetry tracing to a self-hosted backend (Jaeger, Grafana Tempo, an OTLP collector), understanding which spans ADK emits, debugging multi-agent routing from traces, metrics, or deciding whether trace_to_cloud / openinference instrumentation is needed.
+  Use when instrumenting or debugging a Google ADK (google-adk Python) agent - setting up OpenTelemetry tracing to a self-hosted backend (Jaeger, Grafana Tempo, an OTLP collector), understanding which spans ADK emits, debugging multi-agent routing from traces, metrics, or deciding whether trace_to_cloud / openinference instrumentation is needed.
 ---
 
 # Tracing and observability in ADK
@@ -31,7 +31,7 @@ adk-docs (`docs/observability/traces.md`) states it: ADK emits OTLP, usable by
 *"any OTel-compatible backend (e.g. Google Cloud Trace, Jaeger, Grafana Tempo,
 Datadog)"*, and shows the self-hosted setup as a first-class path.
 
-**So: not passing the cloud flags does not disable tracing — it leaves it in
+**So: not passing the cloud flags does not disable tracing - it leaves it in
 the env-var branch. Setting the env var is the whole fix; no server code
 change.**
 
@@ -50,7 +50,7 @@ jaeger:
   image: jaegertracing/all-in-one:1.60
   ports:
     - "16686:16686"   # UI
-    - "4318:4318"     # OTLP HTTP — the default OTLPSpanExporter transport
+    - "4318:4318"     # OTLP HTTP - the default OTLPSpanExporter transport
   restart: unless-stopped
 ```
 
@@ -58,10 +58,10 @@ Grafana Tempo is identical in shape; only the image and collector port change.
 
 Dependencies: `opentelemetry-sdk` and
 `opentelemetry-exporter-otlp-proto-http` come in as base dependencies of
-`google-adk` — verify in your own venv rather than assuming.
+`google-adk` - verify in your own venv rather than assuming.
 
 Optional: `opentelemetry-instrumentation-google-genai` (shipped via the
-`google-adk[otel-gcp]` extra — the name is misleading, it adds no functional
+`google-adk[otel-gcp]` extra - the name is misleading, it adds no functional
 GCP dependency; it only enriches `generate_content` span attributes with
 Gemini SDK detail). Without it,
 `_setup_instrumentation_lib_if_installed` (`cli/api_server.py`) logs a warning
@@ -78,13 +78,13 @@ Hierarchy (adk-docs `docs/observability/traces.md`; implementation in
 `src/google/adk/flows/llm_flows/base_llm_flow.py`,
 `src/google/adk/flows/llm_flows/functions.py`):
 
-- `invocation` — root, one per turn.
-- `invoke_agent` — one per agent node traversed; attributes
+- `invocation` - root, one per turn.
+- `invoke_agent` - one per agent node traversed; attributes
   `gen_ai.agent.name`, `gen_ai.conversation.id`.
-- `call_llm` / `generate_content {model}` — attributes `gen_ai.request.model`,
+- `call_llm` / `generate_content {model}` - attributes `gen_ai.request.model`,
   invocation id, full `llm_request`/`llm_response` payload if content capture
   is enabled, token usage.
-- `execute_tool` — one per tool call, **including `transfer_to_agent`**, which
+- `execute_tool` - one per tool call, **including `transfer_to_agent`**, which
   is an ordinary `FunctionTool`
   (`src/google/adk/tools/transfer_to_agent_tool.py`). It goes through
   `trace_tool_call` with `gen_ai.tool.name=transfer_to_agent` and
@@ -98,7 +98,7 @@ arguments, not invisible side effects.** The waterfall
 Prompt/response payloads are gated by
 `ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS` /
 `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT`
-(`src/google/adk/telemetry/tracing.py`) — limited by default for PII reasons.
+(`src/google/adk/telemetry/tracing.py`) - limited by default for PII reasons.
 Enable explicitly for deep debugging, and think about where those spans land.
 
 Metrics exist too: `src/google/adk/telemetry/_metrics.py` records agent
@@ -111,7 +111,7 @@ execution duration and client operation duration
 
 Any `google.genai.client.Client(...).generate_content(...)` invoked directly
 from inside a tool bypasses the ADK flow and produces **no ADK span**.
-Switching to `google.adk.models.Gemini` does not fix this — spans come from the
+Switching to `google.adk.models.Gemini` does not fix this - spans come from the
 `Runner`/flow, not from the model object (see `adk-structured-output` §5). The
 only ways to get such a call traced are to bring it into the ADK loop (a leaf
 agent + `AgentTool`) or to instrument the Gemini SDK itself with
@@ -120,7 +120,7 @@ assumed.
 
 Audit for this pattern before concluding "we have full tracing".
 
-## 5. `openinference` / Arize — generic, but usually redundant
+## 5. `openinference` / Arize - generic, but usually redundant
 
 `adk-samples/python/agents/RAG/rag/tracing.py`:
 

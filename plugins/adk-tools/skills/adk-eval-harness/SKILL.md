@@ -1,7 +1,7 @@
 ---
 name: adk-eval-harness
 description: >-
-  Use when testing a Google ADK (google-adk Python) agent — writing evalsets, running AgentEvaluator from pytest or the adk eval CLI, choosing metrics (tool_trajectory_avg_score, response_match_score, LLM-as-judge), verifying that multi-agent routing is correct, asserting on session state with a custom metric, or simulating users.
+  Use when testing a Google ADK (google-adk Python) agent - writing evalsets, running AgentEvaluator from pytest or the adk eval CLI, choosing metrics (tool_trajectory_avg_score, response_match_score, LLM-as-judge), verifying that multi-agent routing is correct, asserting on session state with a custom metric, or simulating users.
 ---
 
 # The ADK eval framework
@@ -20,7 +20,7 @@ The consequence that makes this worth adopting in any multi-agent project:
 **transfer of control is itself a tool call**. A routing decision appears in
 the trajectory as `transfer_to_agent(agent_name="...")`, so
 `TrajectoryEvaluator` (`src/google/adk/evaluation/trajectory_evaluator.py`)
-verifies your routing for free — no extra assertions, no instrumentation. For
+verifies your routing for free - no extra assertions, no instrumentation. For
 a system that routes purely by prompt, this is often the only automated way to
 notice that an instruction edit broke the dispatcher.
 
@@ -30,8 +30,8 @@ notice that an instruction edit broke the dispatcher.
 
 | Metric | LLM needed? |
 |---|---|
-| `tool_trajectory_avg_score` | no — deterministic match |
-| `response_match_score` | no — ROUGE-1 |
+| `tool_trajectory_avg_score` | no - deterministic match |
+| `response_match_score` | no - ROUGE-1 |
 | `response_evaluation_score` | yes |
 | `final_response_match_v2` | yes (judge model) |
 | `rubric_based_final_response_quality_v1`, `rubric_based_tool_use_quality_v1` | yes |
@@ -45,9 +45,9 @@ Defaults when no criteria are given (`src/google/adk/evaluation/eval_config.py`)
 `ToolTrajectoryCriterion.MatchType` (same file, implemented in
 `trajectory_evaluator.py`):
 
-- `EXACT` (default) — no extra and no missing tool calls.
-- `IN_ORDER` — expected calls must appear in order; extras tolerated.
-- `ANY_ORDER` — same calls, order free.
+- `EXACT` (default) - no extra and no missing tool calls.
+- `IN_ORDER` - expected calls must appear in order; extras tolerated.
+- `ANY_ORDER` - same calls, order free.
 
 `IN_ORDER` is usually the right default for real agents: it lets you assert
 "authentication first, then the domain tool" without breaking every time the
@@ -91,7 +91,7 @@ Per-metric documentation: `adk-docs: docs/evaluate/criteria.md`.
 ```
 
 `session_input.state` is the escape hatch for preconditions you cannot
-reproduce locally — pre-inject the post-login profile instead of driving a
+reproduce locally - pre-inject the post-login profile instead of driving a
 real OAuth redirect in every case.
 
 An older flat format also exists (`*.test.json`, a list of
@@ -105,18 +105,18 @@ automatically:
 **Free starting material:** the `adk web` UI has an "Add current session"
 button that writes a real `.evalset.json` from a session you just drove by
 hand. Check whether the repo already has committed `*.evalset.json` files
-nobody wired to a test — curating a captured real conversation beats writing
+nobody wired to a test - curating a captured real conversation beats writing
 one from scratch.
 
-## 4. Running it — three paths, one of which matters for CI
+## 4. Running it - three paths, one of which matters for CI
 
-1. **pytest** — `AgentEvaluator.evaluate(...)` or
+1. **pytest** - `AgentEvaluator.evaluate(...)` or
    `AgentEvaluator.evaluate_eval_set(...)`
    (`src/google/adk/evaluation/agent_evaluator.py`). A normal async test.
    Real example: `adk-samples/python/agents/RAG/eval/test_eval.py`.
-2. **CLI** — `adk eval <agent_module_path> <eval_set.json> [--config_file_path=...]`
+2. **CLI** - `adk eval <agent_module_path> <eval_set.json> [--config_file_path=...]`
    (adk-docs: `docs/evaluate/index.md`). Same engine, for non-pytest CI.
-3. **Web UI** — `adk web`, Eval + Trace tabs. Authoring and debugging only.
+3. **Web UI** - `adk web`, Eval + Trace tabs. Authoring and debugging only.
 
 Under the hood `AgentEvaluator` builds a `LocalEvalService`
 (`src/google/adk/evaluation/local_eval_service.py`) with
@@ -126,10 +126,10 @@ Google services are needed only for the LLM-as-judge metrics, which use a
 judge model (default `gemini-2.5-flash`, see `eval_metrics.py`) reachable with
 a plain `GOOGLE_API_KEY`.
 
-`tool_trajectory_avg_score` and `response_match_score` call no LLM at all —
+`tool_trajectory_avg_score` and `response_match_score` call no LLM at all -
 they run offline, in a container, with no API key. Start there.
 
-## 5. Custom metrics — the only way to assert on state
+## 5. Custom metrics - the only way to assert on state
 
 No built-in evaluator reads `final_session_state`, even though the field
 exists on `EvalCase`. If you need to assert "the tool wrote
@@ -139,30 +139,30 @@ resolved by path, receiving the actual `list[Invocation]`), documented in
 `adk-docs: docs/evaluate/custom_metrics.md`.
 
 The practical trick is to inspect `tool_responses` (not `tool_uses`) of the
-relevant call and assert on the serialized payload your tool returned — which
+relevant call and assert on the serialized payload your tool returned - which
 is another reason to keep a single, stable tool result shape
 (`adk-function-tools` §1).
 
 ## 6. Beyond static evalsets
 
-- **User simulation** — `src/google/adk/evaluation/simulation/`
+- **User simulation** - `src/google/adk/evaluation/simulation/`
   (`llm_backed_user_simulator.py`, `static_user_simulator.py`,
   `pre_built_personas.py`, `user_simulator_provider.py`); docs
   `docs/evaluate/user-sim.md`. Drives multi-turn conversations against your
   agent instead of replaying a fixed script.
-- **Conversation scenarios** — `evaluation/conversation_scenarios.py`
+- **Conversation scenarios** - `evaluation/conversation_scenarios.py`
   (`ConversationScenario`, `ConversationGenerationConfig`) for generating
   cases.
-- **Environment / agent simulation** — `src/google/adk/tools/environment_simulation/`
+- **Environment / agent simulation** - `src/google/adk/tools/environment_simulation/`
   and `src/google/adk/tools/agent_simulator/`, each shipping a plugin and a
   tool-connection analyzer; docs `docs/evaluate/environment_simulation.md`.
   Lets you evaluate without hitting real external systems.
-- **Optimization** — `docs/optimize/index.md`.
+- **Optimization** - `docs/optimize/index.md`.
 
 ## 7. Picking the first five cases
 
-Prioritize flows that are **critical and unenforced in code** — rules that
-live only in an instruction — and flows where several agents/tools cooperate
+Prioritize flows that are **critical and unenforced in code** - rules that
+live only in an instruction - and flows where several agents/tools cooperate
 and a silent regression would go unnoticed:
 
 1. A precondition ordering rule (e.g. "authenticate first"):

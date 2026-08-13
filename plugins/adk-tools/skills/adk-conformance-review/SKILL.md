@@ -1,7 +1,7 @@
 ---
 name: adk-conformance-review
 description: >-
-  Use when auditing an existing Google ADK (google-adk Python) codebase against real ADK capabilities — "is our use of ADK idiomatic", "are we reinventing something ADK already provides", "which of our custom abstractions are genuinely necessary" — or when you need the method for verifying ADK API claims against the actual sources instead of guessing.
+  Use when auditing an existing Google ADK (google-adk Python) codebase against real ADK capabilities - "is our use of ADK idiomatic", "are we reinventing something ADK already provides", "which of our custom abstractions are genuinely necessary" - or when you need the method for verifying ADK API claims against the actual sources instead of guessing.
 ---
 
 # ADK conformance review
@@ -15,14 +15,14 @@ This skill is also the index of the ADK skill family (§6).
 1. **The installed package.** `python -c "import google.adk, pathlib;
    print(pathlib.Path(google.adk.__file__).parent)"` then read `version.py`.
    This is what runs. A pin in `pyproject.toml` that disagrees with the venv is
-   itself a finding — and it invalidates any conclusion drawn from the other
+   itself a finding - and it invalidates any conclusion drawn from the other
    version.
 2. **A source checkout of `google/adk-python`** at the same version, for
    grepping.
-3. **`google/adk-docs`** — for intent, recommended patterns and deprecations.
-4. **`google/adk-samples`** — for what Google actually writes, which is
+3. **`google/adk-docs`** - for intent, recommended patterns and deprecations.
+4. **`google/adk-samples`** - for what Google actually writes, which is
    frequently simpler than what the docs describe.
-5. **`google/adk-python-community`** (`google.adk_community.*`) — separate
+5. **`google/adk-python-community`** (`google.adk_community.*`) - separate
    distribution, lighter review bar. Read the source before adopting.
 
 ## 2. Rules for claims
@@ -30,7 +30,7 @@ This skill is also the index of the ADK skill family (§6).
 - **Never assert an ADK class, function, parameter or behaviour you have not
   grepped.** Inventing plausible API names is the dominant failure mode of
   this kind of review and it poisons every downstream task.
-- Cite `path::symbol`. Include a line number only as a hint — line numbers
+- Cite `path::symbol`. Include a line number only as a hint - line numbers
   drift across patch releases, symbol names do not.
 - Distinguish *the docs say* from *the code does*. When they disagree, the
   code wins for behaviour, the docs win for intent, and the disagreement is a
@@ -43,14 +43,14 @@ This skill is also the index of the ADK skill family (§6).
 
 ## 3. Two-phase procedure
 
-**Phase 0 — catalogue what exists.** Read the project and write down every
+**Phase 0 - catalogue what exists.** Read the project and write down every
 architectural and implementation pattern with `file:line`: agent tree and
 routing, tool conventions and return shapes, auth and identity, artifact/file
 handling, direct LLM calls, session-state key conventions, config management,
 dead code. No judgement yet, no edits. This catalogue is the map every later
 phase indexes into.
 
-**Phase 1 — compare, theme by theme.** For each theme, answer three
+**Phase 1 - compare, theme by theme.** For each theme, answer three
 questions and nothing else:
 
 1. Is this already the idiomatic ADK pattern?
@@ -62,7 +62,7 @@ re-litigate its correct decisions. Writing down "ADK has no concept of
 application roles, so this RBAC layer is necessarily ours" is as valuable as
 any fix.
 
-Suggested themes — one pass each, each mapping to a skill in §6:
+Suggested themes - one pass each, each mapping to a skill in §6:
 orchestration · tools & state · auth · artifacts/files · structured output &
 direct LLM calls · memory/RAG · app & plugins · service backends · eval ·
 observability.
@@ -77,13 +77,13 @@ One file per theme plus a prioritized synthesis. Each finding carries:
 
 Prioritize by effort × risk:
 
-- **P1** — low effort, no architectural risk (return-type unwrapping, adding
+- **P1** - low effort, no architectural risk (return-type unwrapping, adding
   `response_schema`, registering a plugin, setting an env var, wiring an
   existing evalset to pytest).
-- **P2** — medium refactors with real maintainability payoff (removing a
+- **P2** - medium refactors with real maintainability payoff (removing a
   redundant agent tier, replacing `copy.copy` with `AgentTool`, converging tool
   result shapes).
-- **P3** — needs a team decision, not just execution (security trade-offs,
+- **P3** - needs a team decision, not just execution (security trade-offs,
   whether to revive or delete a dead branch, whether ingestion stays a
   conversational tool).
 
@@ -127,7 +127,7 @@ Load the one matching the theme you are reviewing rather than reasoning from
 memory about ADK behaviour.
 
 These ten describe ADK at the version they were verified against. When a newer
-`google-adk` release has to be adopted — or when you suspect the skills have
-gone stale — use **`adk-version-upgrade`** (entry point: the `/adk-upgrade`
+`google-adk` release has to be adopted - or when you suspect the skills have
+gone stale - use **`adk-version-upgrade`** (entry point: the `/adk-upgrade`
 command): it establishes the version gap, machine-checks every citation in this
 family against the new sources, and produces the project's migration spec.
