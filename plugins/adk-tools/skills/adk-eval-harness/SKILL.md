@@ -1,6 +1,7 @@
 ---
 name: adk-eval-harness
-description: "Use when testing a Google ADK (google-adk Python) agent — writing evalsets, running AgentEvaluator from pytest or the adk eval CLI, choosing metrics (tool_trajectory_avg_score, response_match_score, LLM-as-judge), verifying that multi-agent routing is correct, asserting on session state with a custom metric, or simulating users."
+description: >-
+  Use when testing a Google ADK (google-adk Python) agent — writing evalsets, running AgentEvaluator from pytest or the adk eval CLI, choosing metrics (tool_trajectory_avg_score, response_match_score, LLM-as-judge), verifying that multi-agent routing is correct, asserting on session state with a custom metric, or simulating users.
 ---
 
 # The ADK eval framework

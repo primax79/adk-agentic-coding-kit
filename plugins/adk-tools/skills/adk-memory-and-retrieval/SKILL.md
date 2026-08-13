@@ -1,6 +1,7 @@
 ---
 name: adk-memory-and-retrieval
-description: "Use when adding memory or RAG to a Google ADK (google-adk Python) project — deciding between BaseMemoryService, BaseRetrievalTool and an external vector store, evaluating hosted or community memory services, wondering whether ADK gives you semantic search or multi-tenant document visibility, or deciding whether ingestion should be a conversational tool."
+description: >-
+  Use when adding memory or RAG to a Google ADK (google-adk Python) project — deciding between BaseMemoryService, BaseRetrievalTool and an external vector store, evaluating hosted or community memory services, wondering whether ADK gives you semantic search or multi-tenant document visibility, or deciding whether ingestion should be a conversational tool.
 ---
 
 # Memory vs retrieval vs your own vector store

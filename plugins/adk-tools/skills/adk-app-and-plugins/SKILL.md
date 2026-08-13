@@ -1,6 +1,7 @@
 ---
 name: adk-app-and-plugins
-description: "Use when configuring the application layer of a Google ADK (google-adk Python) project — the App container, writing or registering a BasePlugin, intercepting every tool or model call globally, the built-in plugins (logging, retry, context filter, global instruction, artifacts), context caching, context compaction for long conversations, or agent resumability."
+description: >-
+  Use when configuring the application layer of a Google ADK (google-adk Python) project — the App container, writing or registering a BasePlugin, intercepting every tool or model call globally, the built-in plugins (logging, retry, context filter, global instruction, artifacts), context caching, context compaction for long conversations, or agent resumability.
 ---
 
 # The App container and plugins

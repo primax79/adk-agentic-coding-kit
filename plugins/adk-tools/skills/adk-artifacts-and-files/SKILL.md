@@ -1,6 +1,7 @@
 ---
 name: adk-artifacts-and-files
-description: "Use when a Google ADK (google-adk Python) agent must handle files — a user attaches a PDF or image in chat and a tool cannot find it, wiring SaveFilesAsArtifactsPlugin, choosing an ArtifactService (in-memory, local file, GCS, S3), loading and listing artifacts from a tool, or returning binary/multimodal content from a tool."
+description: >-
+  Use when a Google ADK (google-adk Python) agent must handle files — a user attaches a PDF or image in chat and a tool cannot find it, wiring SaveFilesAsArtifactsPlugin, choosing an ArtifactService (in-memory, local file, GCS, S3), loading and listing artifacts from a tool, or returning binary/multimodal content from a tool.
 ---
 
 # Files and artifacts in ADK

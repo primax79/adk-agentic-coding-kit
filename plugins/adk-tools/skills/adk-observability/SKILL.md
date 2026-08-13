@@ -1,6 +1,7 @@
 ---
 name: adk-observability
-description: "Use when instrumenting or debugging a Google ADK (google-adk Python) agent — setting up OpenTelemetry tracing to a self-hosted backend (Jaeger, Grafana Tempo, an OTLP collector), understanding which spans ADK emits, debugging multi-agent routing from traces, metrics, or deciding whether trace_to_cloud / openinference instrumentation is needed."
+description: >-
+  Use when instrumenting or debugging a Google ADK (google-adk Python) agent — setting up OpenTelemetry tracing to a self-hosted backend (Jaeger, Grafana Tempo, an OTLP collector), understanding which spans ADK emits, debugging multi-agent routing from traces, metrics, or deciding whether trace_to_cloud / openinference instrumentation is needed.
 ---
 
 # Tracing and observability in ADK
