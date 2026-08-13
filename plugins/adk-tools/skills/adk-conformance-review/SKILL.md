@@ -1,7 +1,6 @@
 ---
 name: adk-conformance-review
-description: >-
-  Use when auditing an existing Google ADK (google-adk Python) codebase against real ADK capabilities - "is our use of ADK idiomatic", "are we reinventing something ADK already provides", "which of our custom abstractions are genuinely necessary" - or when you need the method for verifying ADK API claims against the actual sources instead of guessing.
+description: "Use when auditing an existing Google ADK (google-adk Python) codebase against real ADK capabilities - \"is our use of ADK idiomatic\", \"are we reinventing something ADK already provides\", \"which of our custom abstractions are genuinely necessary\" - or when you need the method for verifying ADK API claims against the actual sources instead of guessing."
 ---
 
 # ADK conformance review

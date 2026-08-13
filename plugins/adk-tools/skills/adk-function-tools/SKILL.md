@@ -1,7 +1,6 @@
 ---
 name: adk-function-tools
-description: >-
-  Use when writing or reviewing tools for a Google ADK (google-adk Python) agent - choosing the return type of a FunctionTool, writing tool docstrings the model can actually use, reading and writing session state from a tool and its app/user/temp key prefixes, using ToolContext (artifacts, memory, confirmation, actions), long-running and human-in-the-loop tools, or toolsets.
+description: "Use when writing or reviewing tools for a Google ADK (google-adk Python) agent - choosing the return type of a FunctionTool, writing tool docstrings the model can actually use, reading and writing session state from a tool and its app/user/temp key prefixes, using ToolContext (artifacts, memory, confirmation, actions), long-running and human-in-the-loop tools, or toolsets."
 ---
 
 # Writing ADK function tools

@@ -1,7 +1,6 @@
 ---
 name: adk-service-backends
-description: >-
-  Use when choosing or wiring the pluggable backing services of a Google ADK (google-adk Python) deployment - SessionService, ArtifactService, MemoryService, CredentialService - including self-hosted options (SQLite, Postgres, Redis, S3/MinIO), what the defaults silently are, and how to register a custom service via services.yaml or services.py.
+description: "Use when choosing or wiring the pluggable backing services of a Google ADK (google-adk Python) deployment - SessionService, ArtifactService, MemoryService, CredentialService - including self-hosted options (SQLite, Postgres, Redis, S3/MinIO), what the defaults silently are, and how to register a custom service via services.yaml or services.py."
 ---
 
 # Pluggable service backends

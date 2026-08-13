@@ -1,7 +1,6 @@
 ---
 name: adk-tool-auth
-description: >-
-  Use when a Google ADK (google-adk Python) tool needs authentication or user identity - OAuth2/OIDC in a tool, AuthenticatedFunctionTool versus a plain FunctionTool, CredentialService choices, storing tokens in session state, custom credential exchangers/refreshers, or when you need application roles/RBAC, service credentials or token exchange that ADK does not provide.
+description: "Use when a Google ADK (google-adk Python) tool needs authentication or user identity - OAuth2/OIDC in a tool, AuthenticatedFunctionTool versus a plain FunctionTool, CredentialService choices, storing tokens in session state, custom credential exchangers/refreshers, or when you need application roles/RBAC, service credentials or token exchange that ADK does not provide."
 ---
 
 # Authentication and identity in ADK tools
