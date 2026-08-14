@@ -1,7 +1,7 @@
 # adk-agentic-coding-kit
 
 Google ADK (`google-adk` Python) dev skills, subagent, and upgrade tooling for
-AI coding agents (Claude Code, Kilo Code) — source-verified, not guessed.
+AI coding agents (Claude Code, Kilo Code) - source-verified, not guessed.
 
 Packaged as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 **`adk-tools`**.
@@ -10,14 +10,14 @@ Packaged as a Kilo Code / Claude Code plugin marketplace. One plugin today:
 
 Two top-level directories, two different kinds of content:
 
-- **`plugins/`** — installable via the Claude Code / Kilo Code plugin
+- **`plugins/`** - installable via the Claude Code / Kilo Code plugin
   marketplace mechanism (skills, subagents, commands). The name and layout
   here aren't a style choice: `.claude-plugin/marketplace.json` and each
   plugin's own `.claude-plugin/plugin.json` are what Claude Code's native
-  `/plugin` command and `kilo-plugin-manager` both expect, byte-for-byte —
+  `/plugin` command and `kilo-plugin-manager` both expect, byte-for-byte -
   renaming it would break installability. One plugin lives here today:
   `adk-tools`, described below.
-- **`instructions/`** — not a plugin, not something you "install" per
+- **`instructions/`** - not a plugin, not something you "install" per
   project. A framework-agnostic, always-on set of agent operating rules
   (git safety, third-party API verification, scope discipline) meant to be
   loaded into *every* session unconditionally, unlike skills which load on
@@ -26,32 +26,32 @@ Two top-level directories, two different kinds of content:
 
 ## What's in `adk-tools`
 
-- **11 reference skills** — `adk-agent-architecture`, `adk-function-tools`,
+- **11 reference skills** - `adk-agent-architecture`, `adk-function-tools`,
   `adk-structured-output`, `adk-artifacts-and-files`, `adk-tool-auth`,
   `adk-memory-and-retrieval`, `adk-app-and-plugins`, `adk-service-backends`,
   `adk-eval-harness`, `adk-observability`, `adk-conformance-review`. Each is
-  grounded in the actual `google-adk` source (not the docs alone) — every
+  grounded in the actual `google-adk` source (not the docs alone) - every
   claim cites `path::symbol`, not a guessed API.
-- **`adk-version-upgrade`** — a 12th skill, the procedure for moving a
+- **`adk-version-upgrade`** - a 12th skill, the procedure for moving a
   project between `google-adk` releases: detect the version gap, diff only
   what matters, re-verify the other 11 skills against the new version, emit
   a migration spec. Ships with two bundled scripts
   (`get_adk_tree.py`, `check_citations.py`) and a migration-spec template.
-- **`adk-diff-auditor`** subagent — read-only, dispatched by
+- **`adk-diff-auditor`** subagent - read-only, dispatched by
   `adk-version-upgrade` to audit one subpackage of an ADK version diff in
   isolation.
-- **`/adk-upgrade`** command — the entry point that drives the above end to
+- **`/adk-upgrade`** command - the entry point that drives the above end to
   end for the current project (two confirmation gates, never edits pins or
-  application code itself — it produces analysis + an updated skill set +
+  application code itself - it produces analysis + an updated skill set +
   a migration spec, execution is a separate step).
 
 ## Install
 
 Three independent install paths. `kilo-plugin-manager` is the one actually
-verified end to end in this repo's history (twice, see Status below) — it
+verified end to end in this repo's history (twice, see Status below) - it
 writes working files into **both** `.kilo/` and `.claude/`, so it installs
 for Claude Code too, with or without Claude's own native `/plugin` command
-being available in your environment (it isn't in every Claude Code build —
+being available in your environment (it isn't in every Claude Code build -
 if `/plugin` errors with "isn't available in this environment", use
 `kilo-plugin-manager` instead, it does not depend on that command at all).
 
@@ -63,7 +63,7 @@ One-time, per machine: register this repo as a marketplace.
 python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add git@github.com:primax79/adk-agentic-coding-kit.git --name adk-agentic-coding-kit
 ```
 
-**Global** — available in every project on this machine, written to
+**Global** - available in every project on this machine, written to
 `~/.kilo/skills/`, `~/.kilo/agent/`, `~/.kilo/command/` and their
 `~/.claude/` counterparts:
 
@@ -71,7 +71,7 @@ python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py add git@git
 python3 ~/.kilo/skills/kilo-plugin-manager/scripts/plugin_manager.py install adk-tools@adk-agentic-coding-kit
 ```
 
-**Per project** — scoped to one repo only, written to `<repo>/.kilo/...`
+**Per project** - scoped to one repo only, written to `<repo>/.kilo/...`
 and `<repo>/.claude/...` (skills are symlinks back to the marketplace
 checkout; pass `--copy` instead if the install must not depend on the
 local checkout staying in place):
@@ -87,10 +87,10 @@ refreshes every install it made, global and per-project alike.
 ### Kilo Skill URLs (native marketplace mechanism, no extra tooling)
 
 Kilo Code's own Settings UI (**Agent Behaviour → Skills**, "Skill URLs" field
-at the bottom) — or the `skills.urls` array in `kilo.jsonc` directly — can
+at the bottom) - or the `skills.urls` array in `kilo.jsonc` directly - can
 point straight at a URL serving an `index.json` manifest, with no
 `kilo-plugin-manager` or any other script involved. This repo ships one at
-every path depth (plugin level, skills-dir level, per-skill level — point at
+every path depth (plugin level, skills-dir level, per-skill level - point at
 whichever, Kilo resolves the same set either way), generated by
 `scripts/generate_skill_indices.py`:
 
@@ -100,12 +100,12 @@ https://raw.githubusercontent.com/primax79/adk-agentic-coding-kit/main/plugins/a
 
 Paste that into the Skill URLs field (Global Config) or into your project's
 `.kilo/kilo.jsonc` under `skills.urls` (Local Config) to pull in all 12
-`adk-tools` skills this way — Claude Code compatibility and the
+`adk-tools` skills this way - Claude Code compatibility and the
 `adk-diff-auditor` subagent/`/adk-upgrade` command still need one of the two
 paths above, since this mechanism only covers skills.
 
 Re-run `python3 scripts/generate_skill_indices.py` after adding, removing, or
-renaming a skill under `plugins/adk-tools/skills/` — the `index.json` files
+renaming a skill under `plugins/adk-tools/skills/` - the `index.json` files
 are generated, not hand-maintained, and must be committed alongside the
 skill change.
 
@@ -116,7 +116,7 @@ claude plugin marketplace add git@github.com:primax79/adk-agentic-coding-kit.git
 /plugin install adk-tools@adk-agentic-coding-kit
 ```
 
-This is Claude Code's own mechanism (global, user-level — Claude Code does
+This is Claude Code's own mechanism (global, user-level - Claude Code does
 not have a documented per-project plugin scope the way Kilo does with
 `--project`). Use it if `/plugin` works in your environment; otherwise use
 `kilo-plugin-manager` above, which produces the same `.claude/agents/`,
@@ -128,7 +128,7 @@ command.
 Extracted from a real ADK upgrade + conformance-review pass on a production
 multi-agent project (`dave_agent`), then generalized. Verified end to end
 twice: once installing from the local checkout, once installing from this
-repo's real GitHub remote into a throwaway workspace — both times confirming
+repo's real GitHub remote into a throwaway workspace - both times confirming
 the Kilo-shaped `adk-diff-auditor` subagent keeps its read-only permissions
 (`mode: subagent`, `edit: deny`) instead of losing them to a lossy
 Claude→Kilo auto-translation (see `plugins/adk-tools/agents_kilo/`).

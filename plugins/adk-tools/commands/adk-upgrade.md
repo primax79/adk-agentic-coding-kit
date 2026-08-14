@@ -1,7 +1,6 @@
 ---
-description: "Upgrade this project to a newer google-adk release - version gap, source diff, ADK skill re-verification, migration spec"
+description: "Upgrade this project to a newer google-adk release"
 ---
-
 Run the Google ADK upgrade procedure for the current project.
 
 Target version (optional, empty means "latest published"): $ARGUMENTS
@@ -55,6 +54,8 @@ reporting.
    claiming the new pin resolves.
 
 ## Rules
+
+- **IMPORTANTE:** MAI USARE IL CARATTERE `-` (em dash). In Kilo rompe il parsing anche nel corpo in md.
 
 - Do not change the pin, the environment or any application code as part of
   this command. It produces analysis, updated skills and a spec; executing the

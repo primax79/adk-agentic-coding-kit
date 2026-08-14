@@ -32,7 +32,7 @@ report a symbol you have not seen in the source.
 - Two materialized ADK source trees (`<old>/google/adk/...`,
   `<new>/google/adk/...`) and/or a checkout of `google/adk-python` plus the two
   tags.
-- The area to audit — a subpackage path such as `tools/`, `agents/`,
+- The area to audit - a subpackage path such as `tools/`, `agents/`,
   `sessions/`, `plugins/`, `evaluation/`, `telemetry/`, or an explicit file
   list.
 - Optionally: the names of the `adk-*` skills that cite those files, and the
@@ -63,7 +63,7 @@ parallel dispatch useless.
    A name re-exported from a package `__init__.py` (including
    `import x as y` aliases and lazy `__getattr__` maps) is **not** removed.
 4. Only when the project path was supplied: check whether the project touches
-   what changed —
+   what changed -
    `grep -rn "<Symbol>\|<changed_param>" <project>/src`. Private ADK
    attributes (`_invocation_context` and similar) count: ADK owes them no
    compatibility, so a change there is a finding whenever the project reads
@@ -84,7 +84,7 @@ parallel dispatch useless.
 - docstrings, type-hint tightening, added null-safety, logging;
 - internal refactors with unchanged public surface.
 
-**Needs a judgement call** — state it as a question, not a recommendation:
+**Needs a judgement call** - state it as a question, not a recommendation:
 experimental APIs (`@experimental(...)`) whose signature moved, deprecations
 with a still-working shim, behaviour that is now stricter but was previously
 undefined.
@@ -107,7 +107,7 @@ Return markdown, nothing else. No files written.
 quoted from the source. Keep quotes to the few lines that carry the change.>
 
 #### Checked and unchanged
-<Files in the assigned area whose diff turned out to be cosmetic — name them,
+<Files in the assigned area whose diff turned out to be cosmetic - name them,
 so nobody re-reads them.>
 ```
 
@@ -116,6 +116,6 @@ Rules for the report:
 - Quote real code. If you cannot quote it, you have not verified it, and it
   does not go in the table.
 - Line numbers are hints only; symbol names are the citation.
-- Report `no API change` confidently when that is what the diff shows — a
+- Report `no API change` confidently when that is what the diff shows - a
   clean area is a useful result, and padding it with speculation costs the
   caller a re-read.
