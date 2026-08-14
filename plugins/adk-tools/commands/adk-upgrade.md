@@ -15,7 +15,7 @@ reporting.
 1. **Version triple** (skill §1). Report installed / declared / latest, using
    the project's own interpreter. Stop and say so if installed already equals
    the target. If the declared pin disagrees with what is installed, raise that
-   first — every later conclusion depends on which one is real.
+   first - every later conclusion depends on which one is real.
 
 2. **Confirm the target with me** before doing any work: the version, whether
    it is a major bump, and the `requires-python` / `pydantic` / `google-genai`
@@ -50,8 +50,8 @@ reporting.
 9. **Write the migration spec** (skill §7) from
    `~/.kilo/skills/adk-version-upgrade/references/migration-spec-template.md`
    into this project's task area. Discover the project's real constraints
-   first — undeclared editable installs, lockfile, Dockerfile install lines,
-   conflicting pins in extras — and run `uv pip install --dry-run` before
+   first - undeclared editable installs, lockfile, Dockerfile install lines,
+   conflicting pins in extras - and run `uv pip install --dry-run` before
    claiming the new pin resolves.
 
 ## Rules
@@ -61,5 +61,5 @@ reporting.
   spec is a separate, reviewable task.
 - No claim about ADK without a `path::symbol` you actually grepped in the new
   tree.
-- State negative results explicitly ("checked, unchanged") — they are what
+- State negative results explicitly ("checked, unchanged") - they are what
   stops the next person from redoing the comparison.
