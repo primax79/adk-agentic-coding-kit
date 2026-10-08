@@ -17,7 +17,7 @@ for how this repo relates to its siblings.
 - `scripts/generate_skill_indices.py` — regenerates every `index.json` for
   the Skill-URLs install path.
 - `.claude-plugin/marketplace.json` — the marketplace manifest Claude
-  Code's `/plugin` and `kilo-plugin-manager` both read.
+  Code's `/plugin` reads.
 
 ## Mandatory rules
 
